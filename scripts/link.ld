@@ -1,14 +1,22 @@
 OUTPUT_FORMAT(elf64-x86-64)
-ENTRY(kmain)
-KERNEL_VMA = 0x100000;
+ENTRY(bootstrap)
+KERNEL_LMA = 0x100000;
+KERNEL_VMA = 0x0;
 SECTIONS
 {
+    . = KERNEL_LMA;
+
+    .bootstrap :
+    {
+        obj/bootstrap.o (.text)
+    }
+
     . = KERNEL_VMA;
 
     .text : AT(ADDR(.text) - KERNEL_VMA)
     {
         _code = .;
-        *(.text)
+        *(EXCLUDE_FILE(*obj/bootstrap.o) .text)
         *(.rodata*)
         . = ALIGN(4096);
     }
