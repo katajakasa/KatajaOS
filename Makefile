@@ -3,6 +3,7 @@
 # Change these as necessary
 CROSS=/usr/local/cross/bin
 OUTPUT=kernel.bin
+IMAGE=image.iso
 
 # Tools
 NASM=nasm
@@ -51,9 +52,10 @@ all:
 	@echo "All done!"
 
 image:
-	grub-mkrescue -o image.iso $(BINDIR)
+	$(RM) $(IMAGE)
+	grub-mkrescue -o image.iso $(ISODIR)
     
 clean:
 	$(RM) $(OBJDIR)/*.o
-	$(RM) $(BINDIR)/image.bin
+	$(RM) $(ISODIR)/boot/$(OUTPUT)
 
