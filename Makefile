@@ -17,16 +17,19 @@ LD=$(CROSS)/x86_64-pc-elf-ld
 # Files
 BOOTSTRAPFILE=src/bootstrap/bootstrap.asm
 FILES := \
-    src/kmain.c
+    src/kmain.c \
+    src/screen.c
     
 # Directories
 INCDIR=include
+SRCDIR=src
 OBJDIR=obj
 ISODIR=iso
 
 # Flags
 NASMFLAGS=-felf64
 CFLAGS=-I$(INCDIR) \
+    -I$(INCDIR)/libc \
     -m64 \
     -ffreestanding \
     -fno-builtin \
@@ -46,6 +49,7 @@ all:
 	$(MKDIR) $(BINDIR)/
 	$(MKDIR) $(OBJDIR)/
 	$(NASM) $(NASMFLAGS) -o $(OBJDIR)/bootstrap.o $(BOOTSTRAPFILE)
+	$(NASM) $(NASMFLAGS) -o $(OBJDIR)/io.o $(SRCDIR)/system/io.asm
 	$(CC) $(CFLAGS) -c $(FILES)
 	$(MV) *.o $(OBJDIR)/
 	$(LD) $(LDFLAGS) -o $(ISODIR)/boot/$(OUTPUT) $(OBJDIR)/*.o
