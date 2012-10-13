@@ -18,7 +18,9 @@ LD=$(CROSS)/x86_64-pc-elf-ld
 BOOTSTRAPFILE=src/bootstrap/bootstrap.asm
 FILES := \
     src/kmain.c \
-    src/screen.c
+    src/screen.c \
+    src/libc/math.c \
+    src/libc/string.c
     
 # Directories
 INCDIR=include
