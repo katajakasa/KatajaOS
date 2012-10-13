@@ -6,36 +6,36 @@ global inportdw
 global outportdw
 
 inportb:
-    mov edx, [esp+4]
-    xor eax, eax
+    mov rdx, [rsp+8]
+    xor rax, rax
     in al, dx
     ret
 
 outportb:
-    mov edx, [esp+4]
-    mov eax, [esp+8]
+    mov rdx, [rsp+8]
+    mov rax, [rsp+16]
     out dx, al
     ret
 
 inportw:
-    mov edx, [esp+4]
-    xor eax, eax
+    mov rdx, [rsp+8]
+    xor rax, rax
     in ax, dx
     ret
 
 outportw:
-    mov edx, [esp+4]
-    mov eax, [esp+8]
+    mov rdx, [rsp+8]
+    mov rax, [rsp+16]
     out dx, ax
     ret
 
 inportdw:
-    mov edx, [esp+4]
+    mov rdx, [rsp+8]
     in eax, dx
     ret
 
 outportdw:
-    mov edx, [esp+4]
-    mov eax, [esp+8]
+    mov rdx, [rsp+8]
+    mov rax, [rsp+16]
     out dx, eax
     ret

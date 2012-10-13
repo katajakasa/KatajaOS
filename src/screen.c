@@ -19,7 +19,7 @@ void screen_clear() {
         *(addr + i++) = ' ';
         *(addr + i++) = 0x7;
     }
-    //screen_move_cursor(0);
+    screen_move_cursor(0);
 }
 
 void screen_print(unsigned char color, unsigned int pos, char* str, unsigned int len) {
