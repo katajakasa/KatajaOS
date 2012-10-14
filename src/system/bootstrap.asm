@@ -22,8 +22,9 @@ mb_header_end:
 [EXTERN pos_pd]
 
 bootstrap:
-    ; Save multiboot header to edx
-    mov edx, eax
+    ; Save multiboot data
+    mov edi, eax
+    mov esi, ebx
 
     ; Load new GDT
     mov eax, gdt_r1
@@ -31,7 +32,7 @@ bootstrap:
 
     ; Set stack
     mov esp, pos_stack
-    
+
     ; Page tables
     mov eax, pos_pdpt
     or eax, 1
@@ -80,11 +81,13 @@ bootstrap:
 [EXTERN kmain]
 
 .longmode_realm:
-    ; Set stack, refresh registers
+    ; refresh registers
     mov eax, 0x10
     mov ds, ax
     mov es, ax
     mov ss, ax
+    
+    ; Set stack
     mov rsp, pos_stack + 0xFFFFFFFF80000000
  
     ; Long mode GDT
@@ -93,9 +96,8 @@ bootstrap:
     
     ; Call kernel main function. If main returns, kill interrupts and halt.
     mov rax, kmain
-    push rdx ; Multiboot2 header
-    push rbx ; Multiboot2 info
     call rax
+    cli
     hlt
 
 ; GDT Data

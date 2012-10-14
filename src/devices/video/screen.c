@@ -1,4 +1,4 @@
-#include <screen.h>
+#include <devices/video/screen.h>
 
 void screen_init() {
     screen_clear();

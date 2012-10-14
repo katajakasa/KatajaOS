@@ -1,7 +1,18 @@
 #include "system/multiboot2.h"
-#include "screen.h"
+#include "devices/video/screen.h"
+#include "devices/video/console.h"
+#include "kprintf.h"
 
 void kmain(unsigned long magic, multiboot_info_t* mbt2_info) {
+    // Initialize video
     screen_init();
-    screen_print(COLOR_INTENSITY_HIGH|COLOR_BLUE, 0, "LOLWIN", 6);
+    console_init();
+
+    // Check multiboot header
+    if(magic == MULTIBOOT2_BOOTLOADER_MAGIC) {
+        kprintf("Found Multiboot2 header (0x%lx)!\n", magic);
+    } else {
+        kprintf("Error! No valid multiboot2 header detected!\n");
+        return;
+    }
 }

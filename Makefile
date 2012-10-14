@@ -15,12 +15,13 @@ CP=cp
 LD=$(CROSS)/x86_64-pc-elf-ld
 
 # Files
-BOOTSTRAPFILE=src/bootstrap/bootstrap.asm
 FILES := \
     src/kmain.c \
-    src/screen.c \
+    src/devices/video/screen.c \
+    src/devices/video/console.c \
+    src/kprintf.c \
     src/libc/math.c \
-    src/libc/string.c
+    src/libc/string.c 
     
 # Directories
 INCDIR=include
@@ -50,7 +51,7 @@ LDFLAGS=-nostdlib -nodefaultlibs -T scripts/link.ld
 all: 
 	$(MKDIR) $(BINDIR)/
 	$(MKDIR) $(OBJDIR)/
-	$(NASM) $(NASMFLAGS) -o $(OBJDIR)/bootstrap.o $(BOOTSTRAPFILE)
+	$(NASM) $(NASMFLAGS) -o $(OBJDIR)/bootstrap.o $(SRCDIR)/system/bootstrap.asm
 	$(NASM) $(NASMFLAGS) -o $(OBJDIR)/io.o $(SRCDIR)/system/io.asm
 	$(CC) $(CFLAGS) -c $(FILES)
 	$(MV) *.o $(OBJDIR)/

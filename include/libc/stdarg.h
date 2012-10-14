@@ -1,13 +1,10 @@
 #ifndef _STDARG_H
 #define _STDARG_H
 
-typedef struct va_list_s {
-	void* va_ptr;
-} va_list;
-
-#define va_start(ap, argN) ((ap.va_ptr = (void*)(&argN + 1)),(void)0)
-#define va_copy(dest, src) ((dest.va_ptr = src.va_ptr),(void)0)
-#define va_arg(ap, type) ((ap.va_ptr = ((char*)ap.va_ptr + sizeof(type))), *(type*)((char*)ap.va_ptr - sizeof(type)))
-#define va_end(ap) ((ap.va_ptr = 0),(void)0)
+#define va_start(v,l) __builtin_va_start(v,l)
+#define va_arg(v,l)   __builtin_va_arg(v,l)
+#define va_end(v)     __builtin_va_end(v)
+#define va_copy(d,s)  __builtin_va_copy(d,s)
+typedef __builtin_va_list va_list;
 
 #endif // _STDARG_H
