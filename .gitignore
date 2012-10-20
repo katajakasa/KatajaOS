@@ -1,4 +1,6 @@
 obj/
 *.o
 *.iso
+roms/BIOS-bochs-latest
+roms/VGABIOS-lgpl-latest
 iso/boot/kernel.bin
