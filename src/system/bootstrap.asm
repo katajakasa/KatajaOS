@@ -3,15 +3,16 @@ ALIGN 8
 
 [SECTION .header]
 
+MODULEALIGN equ 1<<0
+MEMINFO     equ 1<<1
+FLAGS       equ MODULEALIGN | MEMINFO
+MAGIC       equ 0x1BADB002
+CHECKSUM    equ -(MAGIC + FLAGS)
+
 mb_header_start:
-    ; Header
-    DD    0xE85250D6
-    DD    0
-    DD    mb_header_end - mb_header_start
-    DD    -(0xE85250D6 + (mb_header_end - mb_header_start))
-    
-    DW    0, 0
-    DD    8
+    dd MAGIC
+    dd FLAGS
+    dd CHECKSUM
 mb_header_end:
 
 [SECTION .boot]

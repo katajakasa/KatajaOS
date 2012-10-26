@@ -60,7 +60,7 @@ void idt_init(void) {
 void page_fault_handler(struct registers_t *rgs) {
 	void* cr2 = (void*)read_cr2();
 	dump_registers(rgs);
-	kprintf("Trying to %s address %p; %s. Processor is in %s mode.\n",
+	kprintf("Trying to %s address 0x%x; %s. Processor is in %s mode.\n",
 		((rgs->error_code & 0x2) ? "write" : "read"),
 		cr2,
 		((rgs->error_code & 0x1) ? "page is not present" : "page-level protection violation"),
