@@ -5,7 +5,7 @@ extern isr_handler
 
 ; ISR Handler
 isr_ahandler:
-	; Push registers
+    ; Push registers
     pushfq
     push r15
     push r14
@@ -54,10 +54,10 @@ isr_ahandler:
     popfq
     
     ; "Remove" errorcode and interrupt number from stack
-	add rsp, 16
+    add rsp, 16
     
     ; You haf to get out of here!
-	iretq
+    iretq
 
 ; Loads IDT (Duh!)
 idt_load:
@@ -68,17 +68,17 @@ idt_load:
 %macro isr_0 1
 global isr%1
 isr%1:
-	push qword 0
-	push qword %1
-	jmp isr_ahandler
+    push qword 0
+    push qword %1
+    jmp isr_ahandler
 %endmacro
 
 ; ISR with an error message (Last 8 interrupts)
 %macro isr_8 1
 global isr%1
 isr%1:
-	push qword %1
-	jmp isr_ahandler
+    push qword %1
+    jmp isr_ahandler
 %endmacro
 
 ; ISR Handlers (created with macros)

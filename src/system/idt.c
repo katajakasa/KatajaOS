@@ -58,73 +58,73 @@ void idt_init(void) {
 }
 
 void page_fault_handler(struct registers_t *rgs) {
-	void* cr2 = (void*)read_cr2();
-	dump_registers(rgs);
-	kprintf("Trying to %s address 0x%x; %s. Processor is in %s mode.\n",
-		((rgs->error_code & 0x2) ? "write" : "read"),
-		cr2,
-		((rgs->error_code & 0x1) ? "page is not present" : "page-level protection violation"),
-		((rgs->error_code & 0x4) ? "user" : "supervisor"));
-	panic("Pagefault is deadly for now.");
+    void* cr2 = (void*)read_cr2();
+    dump_registers(rgs);
+    kprintf("Trying to %s address 0x%x; %s. Processor is in %s mode.\n",
+        ((rgs->error_code & 0x2) ? "write" : "read"),
+        cr2,
+        ((rgs->error_code & 0x1) ? "page is not present" : "page-level protection violation"),
+        ((rgs->error_code & 0x4) ? "user" : "supervisor"));
+    panic("Pagefault is deadly for now.");
 }
 
 void div_by_zero_handler(struct registers_t *regs) {
-	dump_registers(regs);
-	panic("Oh shi-! Division By Zero.");
+    dump_registers(regs);
+    panic("Oh shi-! Division By Zero.");
 }
 
 void double_fault_handler(struct registers_t *regs) {
-	dump_registers(regs);
-	panic("Doublefault is deadly. Need moar reboot.");
+    dump_registers(regs);
+    panic("Doublefault is deadly. Need moar reboot.");
 }
 
 void invalid_opcode_handler(struct registers_t *regs) {
-	dump_registers(regs);
-	panic("Invalid Opcode. Wtf?");
+    dump_registers(regs);
+    panic("Invalid Opcode. Wtf?");
 }
 
 struct isr_t isrs[32] = {
-	{"Division by zero", div_by_zero_handler},
-	{"Debug exception", 0},
-	{"Non-maskable interrupt", 0},
-	{"Breakpoint", 0},
-	{"INTO-detected overflow", 0},
-	{"Out of bounds", 0},
-	{"Invalid opcode", invalid_opcode_handler},
-	{"No coprocessor", 0},
-	{"Double fault", double_fault_handler},
-	{"Coprocessor segment overrun", 0},
-	{"Invalid task state segment", 0},
-	{"Segment not present", 0},
-	{"Stack exception", 0},
-	{"General protection fault", 0},
-	{"Page fault", page_fault_handler},
-	{"Unknown interrupt", 0},
-	{"Floating point error", 0},
-	{"Alignment check", 0},
-	{"Machine check", 0},
-	{"Reserved", 0},
-	{"Reserved", 0},
-	{"Reserved", 0},
-	{"Reserved", 0},
-	{"Reserved", 0},
-	{"Reserved", 0},
-	{"Reserved", 0},
-	{"Reserved", 0},
-	{"Reserved", 0},
-	{"Reserved", 0},
-	{"Reserved", 0},
-	{"Reserved", 0},
-	{"Reserved", 0}
+    {"Division by zero", div_by_zero_handler},
+    {"Debug exception", 0},
+    {"Non-maskable interrupt", 0},
+    {"Breakpoint", 0},
+    {"INTO-detected overflow", 0},
+    {"Out of bounds", 0},
+    {"Invalid opcode", invalid_opcode_handler},
+    {"No coprocessor", 0},
+    {"Double fault", double_fault_handler},
+    {"Coprocessor segment overrun", 0},
+    {"Invalid task state segment", 0},
+    {"Segment not present", 0},
+    {"Stack exception", 0},
+    {"General protection fault", 0},
+    {"Page fault", page_fault_handler},
+    {"Unknown interrupt", 0},
+    {"Floating point error", 0},
+    {"Alignment check", 0},
+    {"Machine check", 0},
+    {"Reserved", 0},
+    {"Reserved", 0},
+    {"Reserved", 0},
+    {"Reserved", 0},
+    {"Reserved", 0},
+    {"Reserved", 0},
+    {"Reserved", 0},
+    {"Reserved", 0},
+    {"Reserved", 0},
+    {"Reserved", 0},
+    {"Reserved", 0},
+    {"Reserved", 0},
+    {"Reserved", 0}
 };
 
 void isr_handler(struct registers_t *rgs) {
-	if (rgs->int_no & 0xffffffe0) {
-		panic("isr.c: isr_handler got an invalid interrupt!");
-	}
-	if (isrs[rgs->int_no].handler) {
-		isrs[rgs->int_no].handler(rgs);
-	} else {
-		kprintf("isr.c: ISR %i not handled correctly!", rgs->int_no);
-	}
+    if (rgs->int_no & 0xffffffe0) {
+        panic("isr.c: isr_handler got an invalid interrupt!");
+    }
+    if (isrs[rgs->int_no].handler) {
+        isrs[rgs->int_no].handler(rgs);
+    } else {
+        kprintf("isr.c: ISR %i not handled correctly!", rgs->int_no);
+    }
 }

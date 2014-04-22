@@ -2,36 +2,36 @@
 #include <devices/video/console.h>
 
 int uint2hex(unsigned long num, char *buf, int bufsize, int uppercase) {
-	int i = bufsize;
-	do {
+    int i = bufsize;
+    do {
         if(uppercase)
             buf[--i] = "0123456789ABCDEF"[num & 0x0f];
         else
             buf[--i] = "0123456789abcdef"[num & 0x0f];
-		num >>= 4;
-	} while(num);
+        num >>= 4;
+    } while(num);
 
-	memmove(buf, buf + i, bufsize - i);
-	buf[bufsize - i] = 0;
-	return bufsize - i;
+    memmove(buf, buf + i, bufsize - i);
+    buf[bufsize - i] = 0;
+    return bufsize - i;
 }
 
 int uint2str(unsigned long num, char *buf, int bufsize) {
-	if(!num) {
-		buf[0] = '0';
-		buf[1] = 0;
-		return 1;
-	}
+    if(!num) {
+        buf[0] = '0';
+        buf[1] = 0;
+        return 1;
+    }
  
     int i = bufsize;
-	do {
-		buf[--i] = (num % 10) + '0';
-		num /= 10;
-	} while (num);
+    do {
+        buf[--i] = (num % 10) + '0';
+        num /= 10;
+    } while (num);
     
-	memmove(buf, buf + i, bufsize - i);
-	buf[bufsize - i] = 0;
-	return bufsize - i;
+    memmove(buf, buf + i, bufsize - i);
+    buf[bufsize - i] = 0;
+    return bufsize - i;
 }
 
 int kprintf(const char *fmt, ...) {
@@ -43,11 +43,11 @@ int kprintf(const char *fmt, ...) {
     char output[32];
     int output_len;
     
-	va_list args;
-	va_start(args, fmt);
-	while (*fmt) {
-	    switch (*fmt) {
-	        case '%':
+    va_list args;
+    va_start(args, fmt);
+    while (*fmt) {
+        switch (*fmt) {
+            case '%':
                 if(!(char*)(fmt+1)) {
                     console_putch(KLOGVT,'%');
                     ret++;
@@ -160,8 +160,8 @@ int kprintf(const char *fmt, ...) {
                 fmt++;
                 ret++;
                 break;
-	    }
-	}
+        }
+    }
     va_end(args);
     console_flush();
     return ret;

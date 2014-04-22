@@ -28,9 +28,9 @@ void pmm_init(multiboot_info_t* mbt) {
     }
     
     // Make sure we have at least some :)
-	if(ram_size == 0) {
-	    panic("No RAM detected!\n");
-	}
+    if(ram_size == 0) {
+        panic("No RAM detected!\n");
+    }
     
     // Report RAM
     kprintf("pmm.c: %lu MBytes of RAM found.\n", (ram_size / 1024 / 1024));

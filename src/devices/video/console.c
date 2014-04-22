@@ -110,9 +110,9 @@ void console_setvt(unsigned int vt) {
 
 void console_print(unsigned int vt, char* str, unsigned int len) {
     unsigned int i = 0;
-	while(i < len) {
-	    console_putch(vt, *(str + i++));
-	}
+    while(i < len) {
+        console_putch(vt, *(str + i++));
+    }
 }
 
 void console_putch(unsigned int vt, char c) {
